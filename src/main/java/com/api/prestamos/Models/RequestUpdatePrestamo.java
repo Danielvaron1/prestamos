@@ -7,4 +7,5 @@ import java.time.LocalDate;
 @Data
 public class RequestUpdatePrestamo {
     private LocalDate dateDelivery;
+    private LocalDate dateRent;
 }

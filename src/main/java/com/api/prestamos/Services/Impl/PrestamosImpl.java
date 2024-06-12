@@ -57,13 +57,23 @@ public class PrestamosImpl implements Prestamos {
 
     @Transactional
     @Override
-    public ResponseEntity<Prestamo> updatePrestamo(int idPrestamo, RequestUpdatePrestamo requestUpdatePrestamo) {
+    public ResponseEntity<Prestamo> updatePrestamo(int idPrestamo
+            , RequestUpdatePrestamo requestUpdatePrestamo) {
         try {
             Optional<Prestamo> prestamoOptional = prestamoRepository.findById(idPrestamo);
 
             if (prestamoOptional.isPresent()) {
                 Prestamo prestamoUpdate = prestamoOptional.get();
-                prestamoUpdate.setDateDelivery(requestUpdatePrestamo.getDateDelivery());
+
+                // Verifica y actualiza cada campo solo si no es nulo
+                if (requestUpdatePrestamo.getDateDelivery() != null) {
+                    prestamoUpdate.setDateDelivery(requestUpdatePrestamo.getDateDelivery());
+                }
+                if (requestUpdatePrestamo.getDateRent() != null) {
+                    prestamoUpdate.setDateRent(requestUpdatePrestamo.getDateRent());
+                }
+                // Añadir más verificaciones y actualizaciones de campos según sea necesario
+
                 Prestamo prestamoSave = prestamoRepository.save(prestamoUpdate);
                 if (prestamoSave != null) {
                     return ResponseEntity.ok(prestamoUpdate);
@@ -73,7 +83,7 @@ public class PrestamosImpl implements Prestamos {
             } else {
                 return ResponseEntity.notFound().build();
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             return ResponseEntity.internalServerError().build();
         }
     }
