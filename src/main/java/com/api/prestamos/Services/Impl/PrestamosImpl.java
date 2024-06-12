@@ -11,6 +11,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import org.springframework.web.client.RestTemplate;
+
 import java.util.Optional;
 
 @Service
@@ -19,11 +21,23 @@ public class PrestamosImpl implements Prestamos {
     @Autowired
     PrestamoRepository prestamoRepository;
 
+    @Autowired
+    private RestTemplate restTemplate;
+
     @Override
     @Transactional
     public ResponseEntity<Prestamo> addPrestamos(RequestPrestamo requestPrestamo) {
         try {
             Prestamo prestamo = new Prestamo();
+
+            // Llamar a la API externa
+            String apiUrl = "http://libros/libros/"+String.valueOf(prestamo.getIdBook()); // Cambia esto por la URL real de la API externa
+            ResponseEntity<String> apiResponse = restTemplate.getForEntity(apiUrl, String.class);
+            if (!apiResponse.getStatusCode().is2xxSuccessful()) {
+                // Procesar la respuesta de la API si es necesario
+                return ResponseEntity.badRequest().build();
+            }
+
             prestamo.setDateDelivery(requestPrestamo.getDateDelivery());
             prestamo.setIdBook(requestPrestamo.getIdBook());
             prestamo.setDateRent(requestPrestamo.getDateRent());
@@ -60,6 +74,7 @@ public class PrestamosImpl implements Prestamos {
     public ResponseEntity<Prestamo> updatePrestamo(int idPrestamo
             , RequestUpdatePrestamo requestUpdatePrestamo) {
         try {
+
             Optional<Prestamo> prestamoOptional = prestamoRepository.findById(idPrestamo);
 
             if (prestamoOptional.isPresent()) {
