@@ -31,7 +31,7 @@ public class PrestamosImpl implements Prestamos {
             Prestamo prestamo = new Prestamo();
 
             // Llamar a la API externa
-            String apiUrl = "http://libros/libros/"+String.valueOf(prestamo.getIdBook()); // Cambia esto por la URL real de la API externa
+            String apiUrl = "http://libros/"+String.valueOf(requestPrestamo.getIdBook()); // Cambia esto por la URL real de la API externa
             ResponseEntity<String> apiResponse = restTemplate.getForEntity(apiUrl, String.class);
             if (!apiResponse.getStatusCode().is2xxSuccessful()) {
                 // Procesar la respuesta de la API si es necesario
@@ -50,7 +50,7 @@ public class PrestamosImpl implements Prestamos {
                 return ResponseEntity.badRequest().build();
             }
         }catch (Exception e){
-            return ResponseEntity.internalServerError().build();
+            return ResponseEntity.badRequest().build();
         }
     }
 
