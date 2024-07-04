@@ -1,8 +1,0 @@
-com\api\prestamos\Entitys\Repository\PrestamoRepository.class
-com\api\prestamos\Services\Impl\PrestamosImpl.class
-com\api\prestamos\Models\RequestUpdatePrestamo.class
-com\api\prestamos\Models\RequestPrestamo.class
-com\api\prestamos\Services\Prestamos.class
-com\api\prestamos\PrestamosApplication.class
-com\api\prestamos\Controller\PrestamosController.class
-com\api\prestamos\Entitys\Prestamo.class
