@@ -13,7 +13,7 @@ public class PrestamosApplication {
 		String profile = System.getenv("PROFILE");
 		System.setProperty("spring.profiles.active", profile != null ? profile : "default");
 		// Railway's internal interface takes some time to start. We wait for it to be ready.
-		log.debug("Waiting fo Internal Interface to start...");
+		log.debug("Waiting fo Internal Interface to start ...");
 
 		SpringApplication.run(PrestamosApplication.class, args);
 	}
