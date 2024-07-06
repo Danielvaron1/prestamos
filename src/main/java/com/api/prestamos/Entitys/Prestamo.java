@@ -14,7 +14,7 @@ public class Prestamo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int codigoPrestamo;
-    private long idBook;
+    private String idBook;
     private LocalDate dateRent;
     private LocalDate dateDelivery;
 
